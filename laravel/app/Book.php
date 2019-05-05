@@ -9,11 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
-
-    //protected $table = 'name_der_tabelle';
-
-    //protected $primaryKey = 'name_der_pk_col';
-
     protected $fillable = ['isbn', 'title', 'subtitle', 'rating', 'description', 'user_id', 'net_price'];
 
     //queryScopes
@@ -25,8 +20,6 @@ class Book extends Model
     public function images() : HasMany{
         return $this->hasMany(Image::class);
     }
-
-
 
     public function user() : BelongsTo{
         return $this->belongsTo(User::class);

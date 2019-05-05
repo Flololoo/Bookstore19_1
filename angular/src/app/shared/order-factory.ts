@@ -11,10 +11,11 @@ export class OrderFactory {
             0,
             null,
             [
-                {//state
+                {
                     id: null,
                     comment: '',
                     status: 0,
+                    order_id: 0,
                 }
             ]
         );

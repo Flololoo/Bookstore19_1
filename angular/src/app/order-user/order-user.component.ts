@@ -13,7 +13,7 @@ export class OrderUserComponent implements OnInit {
 
     public orders: Order[] = new Array();
 
-    constructor(private os: OrderService, private router:Router, private route: ActivatedRoute, private auth: AuthService){}
+    constructor(private os: OrderService, private route: ActivatedRoute){}
 
     ngOnInit() {
         const params = this.route.snapshot.params;

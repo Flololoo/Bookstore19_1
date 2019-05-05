@@ -1,4 +1,4 @@
-<div class="container_fluid">
+<div class="container">
   <div class="row py-2">
     <p class="col-2 p-3 text-center border mb-0 bg-light">Bestellnummer</p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Status</p>
@@ -7,7 +7,7 @@
     <p class="col-2 p-3 text-center border mb-0 bg-light">Bruttopreis</p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Kommentar</p>
   </div>
-  <div class="row py-2" *ngFor="let order of orders">
+  <div class="row p-2 mb-2 border" *ngFor="let order of orders">
     <p class="col-2 p-3 text-center border mb-0">{{order.id}}</p>
     <div class="col-2 p-3 text-center border mb-0">
       <p *ngIf="order.states.length > 0;"> {{getOrderStatus(order.states[order.states.length -1 ].status) }}</p>
@@ -16,12 +16,15 @@
     <p class="col-2 p-3 text-center border mb-0">{{order.vat}}</p>
     <p class="col-2 p-3 text-center border mb-0">{{totalPrice(order.total_price, order.vat)}}</p>
     <div class="col-2 p-3 text-center border mb-0">
+      <div *ngFor="let state of order.states; last as l">
+        <p *ngIf="!l" class="text-muted">{{state.comment}}</p>
+      </div>
       <p *ngIf="order.states.length > 0">{{order.states[order.states.length -1 ].comment}}</p>
     </div>
-    <div class="col-12 border">
-      <div *ngFor="let book of order.books">
-        <div>{{book.title}}</div>
-        <div>{{book.price}}</div>
+    <div class="col-4 my-4">
+      <div class="d-flex justify-content-between" *ngFor="let book of order.books">
+        <span><b>Buch:</b> {{book.title}}</span>
+        <span class="pl-5"><b>Preis:</b> {{book.net_price}}€</span>
       </div>
     </div>
   </div>

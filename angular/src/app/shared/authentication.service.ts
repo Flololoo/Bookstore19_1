@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from "util";
 import {HttpClient} from "@angular/common/http";
 import * as decode from 'jwt-decode';
-import {retry} from 'rxjs/operators';
+import {Observable, throwError} from "rxjs/index";
+import {catchError, retry} from "rxjs/operators";
 
 //npm install --save-dev jwt-decode
 
@@ -20,6 +21,7 @@ interface User {
 export class AuthService {
 
     private api:string = 'http://bookstore19.s1610456023.student.kwmhgb.at//api/auth';//'http://localhost:8080/api/auth';
+    private apiGetUser:string = 'http://bookstore19.s1610456023.student.kwmhgb.at/api';//'http://localhost:8080/api/auth';
 
     constructor(private http: HttpClient) {
     }
@@ -39,12 +41,13 @@ export class AuthService {
         return Number.parseInt(localStorage.getItem('userId'));
     }
 
+    public getUser(): Observable<any> {
+        let userId = Number.parseInt(localStorage.getItem('userId'));
+        return this.http.get(`${this.apiGetUser}/user/${userId}`);
+    }
+
     public setLocalStorage(token: string) {
-        console.log("Storing token");
-        console.log(token);
         const decodedToken = decode(token);
-        console.log(decodedToken);
-        console.log("UserID: " + decodedToken.user.id);
         localStorage.setItem('token', token);
         localStorage.setItem('userId', decodedToken.user.id);
         localStorage.setItem('is_admin', decodedToken.user.is_admin);
@@ -55,7 +58,6 @@ export class AuthService {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("is_admin");
-        console.log("logged out");
     }
 
     public isLoggedIn() {
@@ -71,4 +73,7 @@ export class AuthService {
         return !this.isLoggedIn();
     }
 
+    private errorHandler(error: Error | any): Observable<any> {
+        return throwError(error);
+    }
 }

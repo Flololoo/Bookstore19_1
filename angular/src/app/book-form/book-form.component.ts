@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { BookFormErrorMessages } from './book-form-error-messages';
 import {BookFactory} from "../shared/book-factory";
 import {BookStoreService} from "../shared/book-store.service";
-import {Book, Image} from "../shared/book";
+import {Book } from "../shared/book";
 import {BookValidators} from '../shared/book-validators';
 
 @Component({
@@ -54,20 +54,15 @@ export class BookFormComponent implements OnInit {
             ]],
             //authors: this.authors,
             images: this.images,
-            published: new Date(this.book.published)
+            published: new Date(this.book.published),
+            net_price: this.book.net_price,
         });
 
-        console.log(new Date(this.book.published));
         this.bookForm.statusChanges.subscribe(
             () => this.updateErrorMessages());
     }
 
     buildThumbnailsArray() {
-        console.log(this.book.images);
-        //if(this.book.images.length == 0){ //if new book had no images -> but no in edit mode
-        //  this.book.images.push(new Image(0,'',''))
-        //}
-
         this.images = this.fb.array(
             this.book.images.map(
                 t => this.fb.group({
@@ -77,7 +72,6 @@ export class BookFormComponent implements OnInit {
                 })
             ),BookValidators.atLeastOneImage
         );
-        console.log(this.images);
     }
 
     addThumbnailControl() {
@@ -96,7 +90,6 @@ export class BookFormComponent implements OnInit {
         const book: Book = BookFactory.fromObject(this.bookForm.value);
 
         book.images = this.bookForm.value.images;
-        console.log(book);
 
         //just copy the authors
         book.authors = this.book.authors;
@@ -107,7 +100,6 @@ export class BookFormComponent implements OnInit {
             });
         } else {
             book.user_id = 1;// just for testing
-            console.log(book)
             this.bs.create(book).subscribe(res => {
                 //this.book = BookFactory.empty();
                 //this.bookForm.reset(BookFactory.empty());

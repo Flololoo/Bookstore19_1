@@ -1,20 +1,55 @@
-<div class="container_fluid">
+<div class="container">
   <div class="row py-2">
-    <p class="col-1"></p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Bestellnummer</p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Status</p>
-    <p class="col-2 p-3 text-center border mb-0 bg-light">Gesamtpreis</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Nettopreis</p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Steuern</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Bruttopreis</p>
     <p class="col-2 p-3 text-center border mb-0 bg-light">Kommentar</p>
-    <p class="col-1"></p>
   </div>
-  <div class="row py-2" *ngFor="let order of orders">
-    <p class="col-1"></p>
+  <div class="row p-2 mb-2 border" *ngFor="let order of orders">
     <p class="col-2 p-3 text-center border mb-0">{{order.id}}</p>
-    <p class="col-2 p-3 text-center border mb-0"> {{getOrderStatus(order) }}</p>
+    <div class="col-2 p-3 text-center border mb-0">
+      <p *ngIf="order.states.length > 0;"> {{getOrderStatus(order.states[order.states.length -1 ].status) }}</p>
+    </div>
     <p class="col-2 p-3 text-center border mb-0">{{order.total_price}}</p>
     <p class="col-2 p-3 text-center border mb-0">{{order.vat}}</p>
-    <p class="col-2 p-3 text-center border mb-0">Bestellung ist eingetroffen</p>
-    <p class="col-1"></p>
+    <p class="col-2 p-3 text-center border mb-0">{{totalPrice(order.total_price, order.vat)}}</p>
+    <div class="col-2 p-3 text-center border mb-0">
+      <div *ngFor="let state of order.states; last as l">
+        <p *ngIf="!l" class="text-muted">{{state.comment}}</p>
+      </div>
+      <p *ngIf="order.states.length > 0">{{order.states[order.states.length -1 ].comment}}</p>
+    </div>
+    <div class="col-4 my-4">
+      <div class="d-flex justify-content-between" *ngFor="let book of order.books">
+        <span><b>Buch:</b> {{book.title}}</span>
+        <span class=""><b>Preis:</b> {{book.net_price}}€</span>
+      </div>
+    </div>
+    <div class="col-8"></div>
+
+    <div class="col-6">
+      <h3 class="mb-1">Status ändern</h3>
+      <form class="w-100 d-flex" [formGroup]="stateForm" (ngSubmit)="submit(order.id)">
+        <div>
+          <select class="custom-select" formControlName="status">
+            <option value="0">offen</option>
+            <option value="1">bezahlt</option>
+            <option value="2">gesendet</option>
+            <option value="3">storniert</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <input class="form-control" type="text" formControlName="comment">
+        </div>
+        <button type="submit" class="btn btn-success">
+          Speichern
+        </button>
+      </form>
+    </div>
+    <div>
+
+    </div>
   </div>
 </div>

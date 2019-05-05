@@ -10,8 +10,8 @@ export class Book {
                 public authors: Author[],
                 public published: Date,
                 public user_id: number,
-                public price: number,
                 public subtitle?: string,
+                public net_price?: number,
                 public rating?: number,
                 public images?: Image[],
                 public description?: string

@@ -74,12 +74,14 @@ export class CartComponent implements OnInit {
     checkOut(){
         let userId = this.authService.getCurrentUserId();
         //console.log("buy stuff", this.books, this.cartItems, userId);
-        let state: State[] = new Array(new State(100, 'Bestellung eingegangen', 0));
-        let order = new Order(null, 1, '2019-05-05', 40, 20, userId, this.books, state);
-        //console.log(order);
-        //console.log(status);
+        let state: State[] = new Array(new State(100, 'Bestellung eingegangen', 0, 0));
 
-        //console.log(order);
+        let total = 0;
+        for(let i = 0; i < this.books.length; i++){
+            total += this.books[i].net_price * this.cartItems[i][1];
+        }
+
+        let order = new Order(null, 1, '2019-05-05', total, 20, userId, this.books, state);
         let orderFactory = OrderFactory.fromObject(order);
 
         this.os.cartCheckout(orderFactory).subscribe(res => {

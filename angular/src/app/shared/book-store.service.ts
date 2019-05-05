@@ -26,10 +26,6 @@ export class BookStoreService {
       pipe(retry(3)).pipe(catchError((this.errorHandler)));
   }
 
-  /*getCart(isbns):Observable<Book>{
-
-  }*/
-
   create(book:Book):Observable<any> {
       return this.http.post(`${this.api}/book`,book).
       pipe(retry(3)).pipe(catchError((this.errorHandler)));

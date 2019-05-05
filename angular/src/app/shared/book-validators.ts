@@ -18,7 +18,6 @@ export class BookValidators {
             return el.value && el.value.url != "" && el.value.url != null
             && el.value.title != "" && el.value.title != null ? true : false;
         })
-        console.log(check);
         return check ? null : {atLeastOneImage: {valid: false}};
     }
 }

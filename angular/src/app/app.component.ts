@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Book} from "./shared/book";
 import {AuthService} from "./shared/authentication.service";
 
 @Component({

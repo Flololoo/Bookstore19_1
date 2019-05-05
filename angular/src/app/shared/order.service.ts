@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, throwError, of} from "rxjs";
-import { ajax } from 'rxjs/ajax';
-import {catchError, retry, map} from "rxjs/internal/operators";
+import {Observable, throwError} from "rxjs";
+import {catchError, retry} from "rxjs/internal/operators";
 import {Order} from "./order";
-import {Book} from "./book";
+import {State} from "./state";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +21,6 @@ export class OrderService {
     }
 
   getAll(): Observable<Array<Order>>{
-      //return this.http.get(`${this.api}/order-admin`);
-
       return this.http.get(`${this.api}/order-admin`)
           .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
@@ -35,5 +32,10 @@ export class OrderService {
 
     private errorHandler(error: Error | any): Observable<any> {
         return throwError(error);
+    }
+
+    newState(state: State): Observable<any> {
+        console.log("new State", state);
+        return this.http.post(`${this.api}/newState`, state);
     }
 }

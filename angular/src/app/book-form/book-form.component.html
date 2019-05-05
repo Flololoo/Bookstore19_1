@@ -17,8 +17,8 @@
   </div>
   <div class="field">
     <label>Preis</label>
-    <input formControlName="price">
-    <div *ngIf="errors.price" class="ui negative message">{{ errors.price }} </div>
+    <input type="number" formControlName="net_price">
+    <div *ngIf="errors.net_price" class="ui negative message">{{ errors.net_price }} </div>
   </div>
   <div class="field">
     <label>Erscheinungsdatum</label>

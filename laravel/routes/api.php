@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('user/{id}', 'OrderController@findByUserId');
 
 
 Route::get('books', 'BookController@index');
@@ -27,6 +28,8 @@ Route::get('order-admin', 'OrderController@getAll');
 Route::get('order-user/{user_id}', 'OrderController@getUser');
 
 Route::post('order','OrderController@newOrder');
+Route::post('newUser','UserController@save');
+Route::post('newState','OrderController@newState');
 
 Route::group(['middleware' => ['api','cors', 'jwt.auth']], function (){
     Route::post('book', 'BookController@save');
