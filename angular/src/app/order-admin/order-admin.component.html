@@ -1,0 +1,20 @@
+<div class="container_fluid">
+  <div class="row py-2">
+    <p class="col-1"></p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Bestellnummer</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Status</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Gesamtpreis</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Steuern</p>
+    <p class="col-2 p-3 text-center border mb-0 bg-light">Kommentar</p>
+    <p class="col-1"></p>
+  </div>
+  <div class="row py-2" *ngFor="let order of orders">
+    <p class="col-1"></p>
+    <p class="col-2 p-3 text-center border mb-0">{{order.id}}</p>
+    <p class="col-2 p-3 text-center border mb-0"> {{getOrderStatus(order) }}</p>
+    <p class="col-2 p-3 text-center border mb-0">{{order.total_price}}</p>
+    <p class="col-2 p-3 text-center border mb-0">{{order.vat}}</p>
+    <p class="col-2 p-3 text-center border mb-0">Bestellung ist eingetroffen</p>
+    <p class="col-1"></p>
+  </div>
+</div>

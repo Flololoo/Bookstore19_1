@@ -1,0 +1,25 @@
+<div class="container">
+  <div *ngFor="let item of books; index as i;">
+    <div class="row border py-3 {{item.isbn}}">
+      <div class="col-3">
+        <img class="img-fluid" src="{{item.images[0].url}}" alt="">
+      </div>
+      <div class="col-6">
+        <h3 class="mb-0 mt-3">{{item.title}}</h3>
+        <p class="mb-0 mt-3">{{item.subtitle}}</p>
+        <small>{{item.isbn}}</small>
+        <p>Netto:{{item.net_price}} €</p>
+        <p>Menge:{{cartItems[i][1]}}</p>
+        <p>Gesamt:{{itemTotalNet(item.net_price, cartItems[i][1])}}</p>
+      </div>
+      <div class="col-3 justify-content-end align-items-center d-flex">
+        <button class="btn btn-danger" (click)="removeItem(item.isbn)">Delete Item</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3">
+    <button *ngIf="isLoggedIn()" class="btn btn-success" (click)="checkOut()">Checkout</button>
+  </div>
+</div>
+
